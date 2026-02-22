@@ -29,6 +29,8 @@ dependencies:
   flutter_bloc: ^9.1.1
   # localization
   easy_localization: ^3.0.8
+  # loading
+  shimmer: ^3.0.0
 
 
 dev_dependencies:

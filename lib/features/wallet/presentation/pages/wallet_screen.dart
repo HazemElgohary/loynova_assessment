@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loynova_assessment/core/di/injection.dart';
 import 'package:loynova_assessment/core/utils/responsive_layout.dart';
+import 'package:loynova_assessment/features/wallet/presentation/widgets/loaders/trans_item_loader.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/utils/translations_keys.dart';
 import '../../domain/repositories/wallet_repository.dart';
@@ -47,7 +49,38 @@ class _WalletScreenState extends State<WalletScreen> {
       body: BlocBuilder<WalletBloc, WalletState>(
         builder: (context, state) {
           if (state is WalletLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey,
+                    highlightColor: Colors.grey.shade100,
+                    child: Card(
+                      color: const Color(0xFF6C5CE7),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const SizedBox(height: 150),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      color: const Color(0xFF6C5CE7),
+                      // shape: RoundedRectangleBorder(
+                      //   borderRadius: BorderRadius.circular(12),
+                      // ),
+                      child: const SizedBox(height: 50),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ...List.generate(5, (index) => const TransItemLoader()),
+                ],
+              ),
+            );
           } else if (state is WalletError) {
             return Center(
               child: Column(
@@ -126,12 +159,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               final transaction = transactions[index];
                               return TransactionItem(item: transaction);
                             } else if (state.hasNext) {
-                              return const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
+                              return const TransItemLoader();
                             } else {
                               return const SizedBox.shrink();
                             }
