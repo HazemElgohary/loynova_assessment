@@ -33,4 +33,14 @@ class Validators {
     }
     return null;
   }
+
+  static bool isValidEgyptianPhone(String input) {
+    final regex = RegExp(r'^\+20\d{10}$');
+    return regex.hasMatch(input);
+  }
+
+  static bool isValidEmail(String input) {
+    final regex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return regex.hasMatch(input);
+  }
 }
