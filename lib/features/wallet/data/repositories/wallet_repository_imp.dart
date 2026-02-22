@@ -46,6 +46,14 @@ class MockWalletRepository implements WalletRepository {
     }
 
     final start = (page - 1) * limit;
+    if (start >= filtered.length) {
+      return PaginatedTransactionsModel(
+        transactions: const [],
+        page: page,
+        totalItems: filtered.length,
+        hasNext: false,
+      );
+    }
     final end = (start + limit).clamp(0, filtered.length);
 
     return PaginatedTransactionsModel(

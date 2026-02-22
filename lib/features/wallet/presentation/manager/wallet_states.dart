@@ -22,6 +22,7 @@ class WalletLoaded extends WalletState {
   final PointsBalanceEntity balance;
   final List<TransactionEntity> transactions;
   final bool hasNext;
+  final bool isLoadingMore;
   final TransactionType? currentFilter;
 
   const WalletLoaded({
@@ -29,10 +30,33 @@ class WalletLoaded extends WalletState {
     required this.transactions,
     required this.hasNext,
     this.currentFilter,
+    required this.isLoadingMore,
   });
 
+  WalletLoaded copyWith({
+    PointsBalanceEntity? balance,
+    List<TransactionEntity>? transactions,
+    bool? hasNext,
+    TransactionType? currentFilter,
+    bool? isLoadingMore,
+  }) {
+    return WalletLoaded(
+      balance: balance ?? this.balance,
+      transactions: transactions ?? this.transactions,
+      hasNext: hasNext ?? this.hasNext,
+      currentFilter: currentFilter ?? this.currentFilter,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+    );
+  }
+
   @override
-  List<Object?> get props => [balance, transactions, hasNext, currentFilter];
+  List<Object?> get props => [
+    balance,
+    transactions,
+    hasNext,
+    currentFilter,
+    isLoadingMore,
+  ];
 }
 
 class WalletError extends WalletState {
