@@ -19,6 +19,7 @@ class FilterChips extends StatelessWidget {
 
     return Wrap(
       spacing: 8,
+      runSpacing: 8,
       children: filters.map((filter) {
         final isSelected = currentFilter == filter;
         return ChoiceChip(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +39,9 @@ class ShopPlusApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         title: Constants.appName,
+        scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+        ),
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,

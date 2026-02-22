@@ -10,18 +10,14 @@ class AppRouter {
         path: Routes.wallet,
         name: Routes.wallet.replaceAll('/', ''),
         builder: (context, state) => const WalletScreen(),
-        routes: [
-          GoRoute(
-            path: Routes.transfer,
-            name: Routes.transfer,
-            builder: (context, state) {
-              final extra = state.extra as Map<String, dynamic>?;
-              return TransferPointsScreen(
-                availableBalance: extra?['balance'] ?? 0,
-              );
-            },
-          ),
-        ],
+      ),
+      GoRoute(
+        path: Routes.transfer,
+        name: Routes.transfer,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return TransferPointsScreen(availableBalance: extra?['balance'] ?? 0);
+        },
       ),
     ],
   );
@@ -29,5 +25,5 @@ class AppRouter {
 
 class Routes {
   static const String wallet = '/wallet';
-  static const String transfer = 'transferPoints';
+  static const String transfer = '/transferPoints';
 }
