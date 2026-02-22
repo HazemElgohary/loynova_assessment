@@ -1,13 +1,17 @@
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:loynova_assessment/core/router/app_router.dart';
 import 'package:loynova_assessment/core/utils/responsive_layout.dart';
 import 'package:loynova_assessment/features/wallet/presentation/widgets/loaders/trans_item_loader.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/utils/translations_keys.dart';
+import '../../domain/entities/transfer_result_entity.dart';
 import '../manager/wallet_bloc.dart';
 import '../manager/wallet_event.dart';
 import '../manager/wallet_states.dart';
@@ -42,7 +46,27 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.tr(TranslationsKeys.wallet))),
+      appBar: AppBar(
+        title: Text(context.tr(TranslationsKeys.wallet)),
+        actions: [
+          ElevatedButton(
+            onPressed: () async {
+              final state = context.read<WalletBloc>().state;
+
+              if (state is WalletLoaded) {
+                final result = await context.pushNamed(
+                  Routes.transfer,
+                  extra: {'balance': state.balance.totalPoints},
+                );
+                if (result != null && result is TransferResultEntity) {
+                  context.read<WalletBloc>().add(ApplyTransferLocally(result));
+                }
+              }
+            },
+            child: const Text('Transfer Points'),
+          ),
+        ],
+      ),
       body: BlocBuilder<WalletBloc, WalletState>(
         builder: (context, state) {
           if (state is WalletLoading) {

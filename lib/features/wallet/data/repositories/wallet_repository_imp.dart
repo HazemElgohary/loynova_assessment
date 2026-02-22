@@ -1,4 +1,3 @@
-
 import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dto.dart';
 import 'package:loynova_assessment/features/wallet/data/models/paginated_transactions_model.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/points_balance_entity.dart';
@@ -59,24 +58,6 @@ class MockWalletRepository implements WalletRepository {
       page: page,
       totalItems: filtered.length,
       hasNext: end < filtered.length,
-    );
-  }
-
-  @override
-  Future<TransferResultEntity> transferPoints(
-    TransferRequestDto request,
-  ) async {
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (request.points > 15750) {
-      throw ValidationException('INSUFFICIENT_BALANCE');
-    }
-
-    return TransferResultEntity(
-      transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
-      points: request.points,
-      newBalance: 15750 - request.points,
-      status: 'COMPLETED',
     );
   }
 }

@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/transaction_entity.dart';
@@ -24,6 +22,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<RefreshWallet>(_onRefreshWallet);
     on<FilterTransactions>(_onFilterTransactions);
     on<LoadMoreTransactions>(_onLoadMoreTransactions);
+    on<ApplyTransferLocally>(_onApplyTransferLocally);
   }
 
   Future<void> _onLoadWallet(
@@ -146,6 +145,37 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         emit(WalletError(e.toString()));
       }
     }
+  }
+
+  Future<void> _onApplyTransferLocally(
+    ApplyTransferLocally event,
+    Emitter<WalletState> emit,
+  ) async {
+    if (state is! WalletLoaded) return;
+
+    final currentState = state as WalletLoaded;
+
+    final updatedBalance = currentState.balance.copyWith(
+      totalPoints: event.result.newBalance,
+    );
+
+    final newTransaction = TransactionEntity(
+      id: event.result.transactionId,
+      description: event.result.description,
+      points: -event.result.points,
+      createdAt: DateTime.now(),
+      type: TransactionType.transferOut,
+      status: TransactionStatus.completed,
+    );
+
+    final updatedTransactions = [newTransaction, ...currentState.transactions];
+
+    emit(
+      currentState.copyWith(
+        balance: updatedBalance,
+        transactions: updatedTransactions,
+      ),
+    );
   }
 
   final scrollController = ScrollController();

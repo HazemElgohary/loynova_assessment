@@ -1,8 +1,6 @@
 import 'package:loynova_assessment/features/wallet/domain/entities/points_balance_entity.dart';
-import 'package:loynova_assessment/features/wallet/domain/entities/transfer_result_entity.dart';
 
 import '../../../../core/utils/enums.dart';
-import '../../data/dtos/transfer_request_dto.dart';
 import '../../data/models/paginated_transactions_model.dart';
 
 abstract class WalletRepository {
@@ -13,6 +11,4 @@ abstract class WalletRepository {
     int limit,
     TransactionType? type,
   });
-
-  Future<TransferResultEntity> transferPoints(TransferRequestDto requestDto);
 }

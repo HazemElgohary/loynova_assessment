@@ -1,4 +1,3 @@
-
 import '../../domain/entities/transfer_result_entity.dart';
 
 class TransferResultModel extends TransferResultEntity {
@@ -7,6 +6,7 @@ class TransferResultModel extends TransferResultEntity {
     required super.points,
     required super.newBalance,
     required super.status,
+    required super.description,
   });
 
   @override
@@ -17,6 +17,7 @@ class TransferResultModel extends TransferResultEntity {
     'points': points,
     'newBalance': newBalance,
     'status': status,
+    'description': description,
   };
 
   factory TransferResultModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +26,7 @@ class TransferResultModel extends TransferResultEntity {
       points: json['points'],
       newBalance: json['newBalance'],
       status: json['status'],
+      description: json['description'],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:loynova_assessment/features/wallet/domain/entities/transfer_result_entity.dart';
 import '../../../../core/utils/enums.dart';
 
 abstract class WalletEvent extends Equatable {
@@ -29,4 +30,13 @@ class LoadMoreTransactions extends WalletEvent {
   const LoadMoreTransactions();
   @override
   List<Object?> get props => [];
+}
+
+class ApplyTransferLocally extends WalletEvent {
+  final TransferResultEntity result;
+
+  const ApplyTransferLocally(this.result);
+
+  @override
+  List<Object?> get props => [result];
 }

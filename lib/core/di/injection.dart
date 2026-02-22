@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:loynova_assessment/core/constants.dart';
 import 'package:loynova_assessment/core/network/api.dart';
+import 'package:loynova_assessment/features/transfer_points/data/repositories/transfer_repository_imp.dart';
 import 'package:loynova_assessment/features/wallet/data/repositories/wallet_repository_imp.dart';
 
+import '../../features/transfer_points/domain/repositories/transfer_repository.dart';
 import '../../features/wallet/domain/repositories/wallet_repository.dart';
 
 final getIt = GetIt.instance;
@@ -33,8 +35,12 @@ Future<void> init() async {
     () => DioApiClient(getIt<DioWrapper>()),
   );
 
-  // Repository
+  // Repositories
   getIt.registerLazySingleton<WalletRepository>(
     () => MockWalletRepository(Constants.mockTransactions),
+  );
+
+  getIt.registerLazySingleton<TransferRepository>(
+    () => TransferRepositoryImp(),
   );
 }
