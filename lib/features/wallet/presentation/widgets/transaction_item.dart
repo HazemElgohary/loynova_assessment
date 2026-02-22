@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/extentions/date_time.dart';
@@ -14,7 +15,15 @@ class TransactionItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
         leading: item.merchantLogo != null
-            ? Image.network(item.merchantLogo!, width: 40, height: 40)
+            ? CachedNetworkImage(
+                width: 40,
+                height: 40,
+                imageUrl: item.merchantLogo!,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.account_balance_wallet),
+              )
             : const Icon(Icons.account_balance_wallet),
         title: Text(item.description),
         subtitle: Text(item.createdAt.toTimeFormat()),

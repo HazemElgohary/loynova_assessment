@@ -190,6 +190,72 @@ class _WalletScreenState extends State<WalletScreen> {
                       ),
                   ],
                 ),
+                webLayout: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverAppBar(
+                      floating: true,
+                      snap: true,
+                      expandedHeight: 150,
+                      elevation: 0,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: BalanceCard(balance: balance, isMobile: true),
+                        ),
+                      ),
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: FilterChips(
+                          currentFilter: state.currentFilter,
+                          onFilterSelected: (type) {
+                            context.read<WalletBloc>().add(
+                              FilterTransactions(type),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+
+                    if (transactions.isEmpty)
+                      const SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Text('No transactions found'),
+                          ),
+                        ),
+                      )
+                    else
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 30,
+                        ),
+                        sliver: SliverList.builder(
+                          itemBuilder: (context, index) {
+                            if (index < transactions.length) {
+                              final transaction = transactions[index];
+                              return TransactionItem(item: transaction);
+                            } else if (state.hasNext) {
+                              return const TransItemLoader();
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
+                          itemCount:
+                              transactions.length +
+                              (state.isLoadingMore ? 1 : 0),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             );
           } else {

@@ -31,6 +31,8 @@ dependencies:
   easy_localization: ^3.0.8
   # loading
   shimmer: ^3.0.0
+  # Cash image
+  cached_network_image: ^3.4.1
 
 
 dev_dependencies:
