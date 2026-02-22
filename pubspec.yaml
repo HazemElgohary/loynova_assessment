@@ -1,0 +1,50 @@
+name: loynova_assessment
+description: "Loynova Technical Hiring Assessment."
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  # Dependency injection
+  get_it: ^9.2.1
+  # Routing
+  go_router: ^17.1.0
+  # equality
+  equatable: ^2.0.8
+  # date and number formatting and parsing
+  intl: ^0.20.2
+  # Network
+  dio: ^5.9.1
+  # State Management
+  flutter_bloc: ^9.1.1
+  # localization
+  easy_localization: ^3.0.8
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^6.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+  assets:
+    - assets/translations/en.json
+    - assets/translations/ar.json
+
+

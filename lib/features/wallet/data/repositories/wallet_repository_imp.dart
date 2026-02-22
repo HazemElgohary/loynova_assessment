@@ -1,0 +1,76 @@
+import 'dart:developer';
+
+import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dto.dart';
+import 'package:loynova_assessment/features/wallet/data/models/paginated_transactions_model.dart';
+import 'package:loynova_assessment/features/wallet/data/models/transfer_result_model.dart';
+import 'package:loynova_assessment/features/wallet/domain/entities/points_balance_entity.dart';
+import 'package:loynova_assessment/features/wallet/domain/entities/transaction_entity.dart';
+
+import '../../../../core/exceptions/app_exception.dart';
+import '../../../../core/utils/enums.dart';
+import '../../domain/entities/transfer_result_entity.dart';
+import '../../domain/repositories/wallet_repository.dart';
+
+/// * Mocked Implementation of the WalletRepository
+class MockWalletRepository implements WalletRepository {
+  final List<TransactionEntity> _transactions;
+
+  MockWalletRepository(this._transactions);
+
+  @override
+  Future<PointsBalanceEntity> getBalance() async {
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    return PointsBalanceEntity(
+      totalPoints: 15750,
+      pendingPoints: 500,
+      expiringPoints: 1200,
+      expiringDate: DateTime(2024, 3, 31),
+      lastUpdated: DateTime(2024, 2, 15),
+      balancesByMerchant: const [],
+    );
+  }
+
+  @override
+  Future<PaginatedTransactionsModel> getTransactions({
+    int page = 1,
+    int limit = 20,
+    TransactionType? type,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    var filtered = _transactions;
+
+    if (type != null) {
+      filtered = filtered.where((t) => t.type == type).toList();
+    }
+
+    final start = (page - 1) * limit;
+    final end = (start + limit).clamp(0, filtered.length);
+
+    return PaginatedTransactionsModel(
+      transactions: filtered.sublist(start, end),
+      page: page,
+      totalItems: filtered.length,
+      hasNext: end < filtered.length,
+    );
+  }
+
+  @override
+  Future<TransferResultEntity> transferPoints(
+    TransferRequestDto request,
+  ) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (request.points > 15750) {
+      throw ValidationException('INSUFFICIENT_BALANCE');
+    }
+
+    return TransferResultEntity(
+      transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
+      points: request.points,
+      newBalance: 15750 - request.points,
+      status: 'COMPLETED',
+    );
+  }
+}
