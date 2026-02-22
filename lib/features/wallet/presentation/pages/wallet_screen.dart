@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:loynova_assessment/core/di/injection.dart';
 import 'package:loynova_assessment/core/utils/responsive_layout.dart';
 
@@ -14,7 +12,7 @@ import '../manager/wallet_event.dart';
 import '../manager/wallet_states.dart';
 import '../widgets/balance_card.dart';
 import '../widgets/filter_chips.dart';
-import '../widgets/transaction_list.dart';
+import '../widgets/transaction_item.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
@@ -54,16 +52,34 @@ class WalletScreen extends StatelessWidget {
                   context.read<WalletBloc>().add(const RefreshWallet());
                 },
                 child: ResponsiveLayout(
-                  mobileLayout: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BalanceCard(balance: balance, isMobile: true),
-                          const SizedBox(height: 16),
-                          FilterChips(
+                  mobileLayout: CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        // pinned: true,
+                        floating: true,
+                        snap: true,
+                        expandedHeight: 200,
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        flexibleSpace: FlexibleSpaceBar(
+                          background: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: BalanceCard(
+                              balance: balance,
+                              isMobile: true,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: FilterChips(
                             currentFilter: state.currentFilter,
                             onFilterSelected: (type) {
                               context.read<WalletBloc>().add(
@@ -71,19 +87,48 @@ class WalletScreen extends StatelessWidget {
                               );
                             },
                           ),
-                          const SizedBox(height: 16),
-                          TransactionList(
-                            transactions: transactions,
-                            hasNext: state.hasNext,
-                            onLoadMore: () {
-                              context.read<WalletBloc>().add(
-                                const LoadMoreTransactions(),
-                              );
-                            },
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+
+                      const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+                      if (transactions.isEmpty)
+                        const SliverToBoxAdapter(
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text('No transactions found'),
+                            ),
+                          ),
+                        )
+                      else
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              if (index < transactions.length) {
+                                final transaction = transactions[index];
+                                return TransactionItem(item: transaction);
+                              } else if (state.hasNext) {
+                                context.read<WalletBloc>().add(
+                                  const LoadMoreTransactions(),
+                                );
+                                return const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            },
+                            childCount:
+                                transactions.length + (state.hasNext ? 1 : 0),
+                          ),
+                        ),
+
+                      const SliverToBoxAdapter(child: SizedBox(height: 16)),
+                    ],
                   ),
                 ),
               );

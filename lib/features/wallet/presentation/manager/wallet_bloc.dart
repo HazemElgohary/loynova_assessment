@@ -31,7 +31,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     try {
       final balance = await repository.getBalance();
-      final txns = await repository.getTransactions(page: _currentPage);
+      final txns = await repository.getTransactions(
+        page: _currentPage,
+        type: _currentFilter,
+        limit: 10,
+      );
       _allTransactions = txns.transactions;
       _hasNext = txns.hasNext;
 
