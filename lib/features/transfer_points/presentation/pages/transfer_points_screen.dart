@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loynova_assessment/core/di/injection.dart';
 import 'package:loynova_assessment/features/transfer_points/domain/repositories/transfer_repository.dart';
-import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dto.dart';
 
 import '../manager/transfer_bloc.dart';
 import '../manager/transfer_events.dart';

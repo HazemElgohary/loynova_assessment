@@ -9,8 +9,6 @@ import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dt
 
 import '../../domain/repositories/transfer_repository.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 class TransferBloc extends Bloc<TransferEvent, TransferState> {
   final TransferRepository repository;
   final int availableBalance;

@@ -1,9 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dto.dart';
-
-import 'package:equatable/equatable.dart';
-
-import 'package:equatable/equatable.dart';
 
 abstract class TransferEvent extends Equatable {
   const TransferEvent();

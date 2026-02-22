@@ -1,11 +1,8 @@
-import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dto.dart';
 import 'package:loynova_assessment/features/wallet/data/models/paginated_transactions_model.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/points_balance_entity.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/transaction_entity.dart';
 
-import '../../../../core/exceptions/app_exception.dart';
 import '../../../../core/utils/enums.dart';
-import '../../domain/entities/transfer_result_entity.dart';
 import '../../domain/repositories/wallet_repository.dart';
 
 /// * Mocked Implementation of the WalletRepository

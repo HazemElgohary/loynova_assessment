@@ -4,8 +4,6 @@ import 'package:loynova_assessment/features/transfer_points/data/models/points_m
 import 'package:loynova_assessment/features/transfer_points/data/models/recipient_model.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/transfer_result_entity.dart';
 
-import 'package:equatable/equatable.dart';
-
 class TransferState extends Equatable {
   final RecipientModel recipient;
   final PointsModel points;
