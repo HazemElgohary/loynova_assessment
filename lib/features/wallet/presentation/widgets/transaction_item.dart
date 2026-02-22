@@ -32,7 +32,7 @@ class TransactionItem extends StatelessWidget {
             ),
             Text(
               item.status.name,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),

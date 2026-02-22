@@ -43,7 +43,3 @@ linter:
     always_declare_return_types: true
     unnecessary_this: true
     directives_ordering: true
-
-  formatter:
-    trailing_commas: preserve
-

@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:loynova_assessment/features/wallet/data/dtos/transfer_request_dto.dart';
 import 'package:loynova_assessment/features/wallet/data/models/paginated_transactions_model.dart';
-import 'package:loynova_assessment/features/wallet/data/models/transfer_result_model.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/points_balance_entity.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/transaction_entity.dart';
 

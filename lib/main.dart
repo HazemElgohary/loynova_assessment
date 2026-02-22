@@ -5,7 +5,6 @@ import 'package:loynova_assessment/core/router/app_router.dart';
 
 import 'core/constants.dart';
 import 'core/di/injection.dart';
-import 'core/utils/bloc_observer.dart';
 import 'features/wallet/domain/repositories/wallet_repository.dart';
 import 'features/wallet/presentation/manager/wallet_bloc.dart';
 

@@ -1,16 +1,13 @@
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loynova_assessment/core/di/injection.dart';
 import 'package:loynova_assessment/core/utils/responsive_layout.dart';
 import 'package:loynova_assessment/features/wallet/presentation/widgets/loaders/trans_item_loader.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/utils/translations_keys.dart';
-import '../../domain/repositories/wallet_repository.dart';
 import '../manager/wallet_bloc.dart';
 import '../manager/wallet_event.dart';
 import '../manager/wallet_states.dart';
