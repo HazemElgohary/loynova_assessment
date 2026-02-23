@@ -103,7 +103,10 @@ class TransferBloc extends Bloc<TransferEvent, TransferState> {
         note: state.note.value.isEmpty ? null : state.note.value,
       );
 
-      final result = await repository.transferPoints(request);
+      final result = await repository.transferPoints(
+        requestDto: request,
+        availableBalance: availableBalance,
+      );
 
       emit(state.copyWith(isSubmitting: false, result: result));
     } catch (e) {

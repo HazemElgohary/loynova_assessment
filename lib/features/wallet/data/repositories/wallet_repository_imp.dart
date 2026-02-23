@@ -1,3 +1,4 @@
+import 'package:loynova_assessment/core/constants.dart';
 import 'package:loynova_assessment/features/wallet/data/models/paginated_transactions_model.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/points_balance_entity.dart';
 import 'package:loynova_assessment/features/wallet/domain/entities/transaction_entity.dart';
@@ -15,14 +16,15 @@ class MockWalletRepository implements WalletRepository {
   Future<PointsBalanceEntity> getBalance() async {
     await Future.delayed(const Duration(milliseconds: 800));
 
-    return PointsBalanceEntity(
-      totalPoints: 15750,
-      pendingPoints: 500,
-      expiringPoints: 1200,
-      expiringDate: DateTime(2024, 3, 31),
-      lastUpdated: DateTime(2024, 2, 15),
-      balancesByMerchant: const [],
-    );
+    // return PointsBalanceEntity(
+    //   totalPoints: 15750,
+    //   pendingPoints: 500,
+    //   expiringPoints: 1200,
+    //   expiringDate: DateTime(2024, 3, 31),
+    //   lastUpdated: DateTime(2024, 2, 15),
+    //   balancesByMerchant: const [],
+    // );
+    return Constants.mockBalance;
   }
 
   @override

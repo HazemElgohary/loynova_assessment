@@ -5,20 +5,21 @@ import '../../domain/repositories/transfer_repository.dart';
 
 class TransferRepositoryImp extends TransferRepository {
   @override
-  Future<TransferResultEntity> transferPoints(
-    TransferRequestDto request,
-  ) async {
+  Future<TransferResultEntity> transferPoints({
+    required TransferRequestDto requestDto,
+    int? availableBalance,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
 
-    if (request.points > 15750) {
+    if (requestDto.points > (availableBalance ?? 15750)) {
       throw ValidationException('INSUFFICIENT_BALANCE');
     }
 
     return TransferResultEntity(
       transactionId: DateTime.now().millisecondsSinceEpoch.toString(),
-      points: request.points,
-      description: request.recipient,
-      newBalance: 15750 - request.points,
+      points: requestDto.points,
+      description: requestDto.recipient,
+      newBalance: ((availableBalance ?? 15750) - requestDto.points).toInt(),
       status: 'COMPLETED',
     );
   }
